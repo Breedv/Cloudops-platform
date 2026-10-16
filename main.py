@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from urllib.parse import urlparse
 import logging
 import time
+import os
 
 import httpx
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -22,7 +23,10 @@ logger = logging.getLogger("cloudops")
 
 # ---------- Database ----------
 
-DATABASE_URL = "sqlite:///./cloudops.db"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///./cloudops.db",
+)
 
 engine = create_engine(
     DATABASE_URL,

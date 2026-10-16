@@ -1,0 +1,12 @@
+
+services:
+  cloudops:
+    build: .
+    container_name: cloudops-api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "sqlite:////data/cloudops.db"
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

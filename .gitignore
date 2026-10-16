@@ -5,3 +5,4 @@ __pycache__/
 cloudops.db
 .env
 .vscode/
+data/
