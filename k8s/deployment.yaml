@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cloudops-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudops
+  template:
+    metadata:
+      labels:
+        app: cloudops
+    spec:
+      containers:
+        - name: cloudops
+          image: cloudops-platform:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: "sqlite:////data/cloudops.db"
+          volumeMounts:
+            - name: cloudops-storage
+              mountPath: /data
+      volumes:
+        - name: cloudops-storage
+          persistentVolumeClaim:
+            claimName: cloudops-data

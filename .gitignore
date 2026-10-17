@@ -6,3 +6,9 @@ cloudops.db
 .env
 .vscode/
 data/
+# Terraform generated files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
