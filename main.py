@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import logging
 import time
 import os
-
+from prometheus_fastapi_instrumentator import Instrumentator
 import httpx
 from apscheduler.schedulers.background import BackgroundScheduler
 from fastapi import Depends, FastAPI, HTTPException
@@ -211,6 +211,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+Instrumentator().instrument(app).expose(app)
 
 
 # ---------- API endpoints ----------
